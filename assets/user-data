@@ -1,0 +1,12 @@
+#cloud-config
+users:
+  - name: root
+    lock_passwd: false
+    hashed_passwd: "$1$system4$pDQ9TdLF29h14LV/X2Qov0"
+    ssh_redirect_user: false
+ssh_pwauth: true
+disable_root: false
+preserve_hostname: true
+runcmd:
+  - sed -i -e '/^[#]*PermitRootLogin/s/^.*$/PermitRootLogin yes/' /etc/ssh/sshd_config
+  - systemctl restart ssh

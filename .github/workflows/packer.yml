@@ -1,0 +1,24 @@
+name: packer
+
+on:
+  push:
+
+env:
+  PRODUCT_VERSION: "latest"
+
+jobs:
+  packer:
+    runs-on: ubuntu-latest
+    name: Run Packer
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Packer
+        uses: hashicorp/setup-packer@main
+        with:
+          version: ${{ env.PRODUCT_VERSION }}
+
+      - run: packer init ./nomad-ubuntu.pkr.hcl
+
+      - run: packer validate ./nomad-ubuntu.pkr.hcl
